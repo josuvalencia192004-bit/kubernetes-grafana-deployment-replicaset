@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720">
+  <rect width="1280" height="720" fill="#0b1220"/>
+  <rect x="40" y="40" width="1200" height="640" rx="16" fill="#0f172a" stroke="#334155"/>
+  <text x="90" y="105" font-family="Arial, sans-serif" font-size="30" fill="#f8fafc" font-weight="bold">Grafana - http://localhost:3000</text>
+  <text x="90" y="145" font-family="Arial, sans-serif" font-size="20" fill="#94a3b8">Iniciar sesión • admin • ********</text>
+  <rect x="90" y="180" width="1080" height="80" rx="8" fill="#111827" stroke="#475569"/>
+  <text x="120" y="230" font-family="Arial, sans-serif" font-size="26" fill="#e2e8f0">Grafana</text>
+  <rect x="90" y="290" width="500" height="220" rx="12" fill="#111827" stroke="#475569"/>
+  <text x="120" y="340" font-family="Arial, sans-serif" font-size="24" fill="#f8fafc" font-weight="bold">Dashboard principal</text>
+  <text x="120" y="390" font-family="Arial, sans-serif" font-size="20" fill="#94a3b8">- Sistema</text>
+  <text x="120" y="425" font-family="Arial, sans-serif" font-size="20" fill="#94a3b8">- Recursos</text>
+  <text x="120" y="460" font-family="Arial, sans-serif" font-size="20" fill="#94a3b8">- Alertas</text>
+  <text x="120" y="495" font-family="Arial, sans-serif" font-size="20" fill="#94a3b8">- Servidores</text>
+  <rect x="650" y="290" width="520" height="220" rx="12" fill="#111827" stroke="#475569"/>
+  <text x="680" y="340" font-family="Arial, sans-serif" font-size="24" fill="#f8fafc" font-weight="bold">Panel de métricas</text>
+  <path d="M680 470 L720 430 L760 450 L810 390 L870 410 L930 330 L1080 370" stroke="#22c55e" fill="none" stroke-width="4"/>
+  <circle cx="720" cy="430" r="5" fill="#22c55e"/>
+  <circle cx="810" cy="390" r="5" fill="#22c55e"/>
+  <circle cx="930" cy="330" r="5" fill="#22c55e"/>
+  <text x="690" y="500" font-family="Arial, sans-serif" font-size="18" fill="#94a3b8">Uso de CPU y memoria</text>
+</svg>

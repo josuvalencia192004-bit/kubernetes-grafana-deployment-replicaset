@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <text x="80" y="90" font-family="Arial, sans-serif" font-size="36" fill="#e5e7eb" font-weight="bold">GitHub - Grafana Deployment y ReplicaSet</text>
+  <rect x="80" y="130" width="1120" height="430" rx="12" fill="#111827" stroke="#374151"/>
+  <text x="110" y="175" font-family="Courier New, monospace" font-size="22" fill="#34d399">k8s/namespace.yaml</text>
+  <text x="110" y="215" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">apiVersion: v1</text>
+  <text x="110" y="245" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">kind: Namespace</text>
+  <text x="110" y="275" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">metadata:</text>
+  <text x="110" y="305" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">  name: observabilidad</text>
+  <text x="700" y="175" font-family="Courier New, monospace" font-size="22" fill="#60a5fa">k8s/grafana.yaml</text>
+  <text x="700" y="215" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">apiVersion: apps/v1</text>
+  <text x="700" y="245" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">kind: Deployment</text>
+  <text x="700" y="275" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">metadata:</text>
+  <text x="700" y="305" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">  name: grafana</text>
+  <text x="700" y="335" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">spec:</text>
+  <text x="700" y="365" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">  replicas: 1</text>
+  <text x="700" y="395" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">  selector:</text>
+  <text x="700" y="425" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">    matchLabels:</text>
+  <text x="700" y="455" font-family="Courier New, monospace" font-size="18" fill="#d1d5db">      app: grafana</text>
+  <rect x="80" y="585" width="250" height="54" rx="10" fill="#10b981"/>
+  <text x="126" y="620" font-family="Arial, sans-serif" font-size="24" fill="#fff" font-weight="bold">kubectl apply</text>
+  <rect x="380" y="585" width="260" height="54" rx="10" fill="#3b82f6"/>
+  <text x="435" y="620" font-family="Arial, sans-serif" font-size="24" fill="#fff" font-weight="bold">Deployment</text>
+  <rect x="690" y="585" width="260" height="54" rx="10" fill="#8b5cf6"/>
+  <text x="742" y="620" font-family="Arial, sans-serif" font-size="24" fill="#fff" font-weight="bold">ReplicaSet</text>
+</svg>

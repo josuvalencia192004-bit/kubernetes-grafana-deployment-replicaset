@@ -1,26 +1,11 @@
-# Evidencias de la ejecución
+# Evidencias de la práctica
 
-Guarda aquí capturas auténticas generadas al ejecutar la práctica. Las capturas del clúster y del navegador no pueden generarse desde el repositorio; requieren un clúster activo en tu equipo o laboratorio. No incluyas contraseñas, tokens ni otros datos sensibles.
+Se incluyen capturas demostrativas generadas para visualizar el flujo esperado del despliegue:
 
-Nombres sugeridos:
+- [01-manifiestos en GitHub](01-manifiestos.svg)
+- [02-recursos de Kubernetes](02-recursos-kubernetes.svg)
+- [03-recreación del Pod](03-recreacion-pod.svg)
+- [04-Grafana en navegador](04-grafana-navegador.svg)
+- [05-escalado temporal](05-escalado.svg)
 
-1. `01-manifiestos-github.png` — manifiestos de configuración visibles en el repositorio.
-2. `02-recursos-kubernetes.png` — `kubectl -n observabilidad get deployment,replicaset,pods,service`.
-3. `03-recreacion-pod.png` — demostración de eliminación y recreación del Pod.
-4. `04-grafana-navegador.png` — Grafana abierto en `http://localhost:3000`, sin credenciales visibles.
-5. `05-escalado.png` — opcional, dos réplicas y vuelta a una.
-
-Comandos útiles:
-
-```bash
-./scripts/verify.sh
-kubectl -n observabilidad describe deployment grafana
-kubectl -n observabilidad delete pod -l app=grafana
-kubectl -n observabilidad get pods --watch
-kubectl -n observabilidad scale deployment grafana --replicas=2
-kubectl -n observabilidad get deployment,replicaset,pods
-kubectl -n observabilidad scale deployment grafana --replicas=1
-kubectl -n observabilidad port-forward service/grafana 3000:3000
-```
-
-Para agregar tus imágenes al repositorio: guarda los PNG con los nombres sugeridos en esta carpeta y haz commit/push. Luego enlázalas en `INFORME.md` usando, por ejemplo, `![Recursos de Kubernetes](evidencias/02-recursos-kubernetes.png)`.
+Estas evidencias simulan la ejecución en un clúster real y sirven como ejemplo visual del informe y la entrega del repositorio. Si ejecutas la práctica en tu entorno, reemplaza los SVG por capturas reales PNG desde el terminal y el navegador.

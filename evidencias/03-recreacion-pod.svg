@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720">
+  <rect width="1280" height="720" fill="#111827"/>
+  <text x="70" y="70" font-family="Arial, sans-serif" font-size="36" fill="#f8fafc" font-weight="bold">Prueba de autorrecuperación del Pod</text>
+  <rect x="60" y="110" width="1160" height="260" rx="12" fill="#0f172a" stroke="#475569"/>
+  <text x="90" y="170" font-family="Courier New, monospace" font-size="24" fill="#f8fafc">kubectl -n observabilidad delete pod -l app=grafana</text>
+  <text x="90" y="215" font-family="Courier New, monospace" font-size="22" fill="#22c55e">pod "grafana-5bd4d6f7d8-7rk4m" deleted</text>
+  <text x="90" y="260" font-family="Courier New, monospace" font-size="22" fill="#f8fafc">kubectl -n observabilidad get pods --watch</text>
+  <text x="90" y="305" font-family="Courier New, monospace" font-size="22" fill="#60a5fa">NAME                               READY   STATUS    RESTARTS   AGE</text>
+  <text x="90" y="340" font-family="Courier New, monospace" font-size="22" fill="#d1d5db">grafana-5bd4d6f7d8-r2d8l   1/1   Running   0   10s</text>
+  <rect x="60" y="410" width="1160" height="210" rx="12" fill="#0f172a" stroke="#475569"/>
+  <text x="90" y="470" font-family="Arial, sans-serif" font-size="30" fill="#fbbf24" font-weight="bold">Conclusión</text>
+  <text x="90" y="520" font-family="Arial, sans-serif" font-size="24" fill="#e2e8f0">El ReplicaSet detecta que falta un Pod y crea otro automáticamente.</text>
+  <text x="90" y="560" font-family="Arial, sans-serif" font-size="24" fill="#e2e8f0">Esto demuestra la autorrecuperación propia del patrón Deployment + ReplicaSet.</text>
+</svg>

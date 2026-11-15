@@ -1,37 +1,31 @@
-# Informe: despliegue de Grafana con Deployment y ReplicaSet
-
-**Estudiante:** ______________________________  
-**Asignatura / sección:** ______________________________  
-**Fecha:** ______________________________  
-**Repositorio público:** https://github.com/josuvalencia192004-bit/kubernetes-grafana-deployment-replicaset
-
-> Completa tus datos y agrega las capturas auténticas indicadas en `evidencias/README.md` antes de entregar. Las capturas deben obtenerse ejecutando el manifiesto en tu clúster; no se han inventado ni simulado.
+# Informe de práctica: Deployment y ReplicaSet con Grafana
 
 ## 1. Objetivo
 
-Desplegar Grafana en Kubernetes y demostrar cómo un `Deployment` administra un `ReplicaSet`, cómo este mantiene la cantidad deseada de Pods y cómo exponer la aplicación mediante un Service y acceso local temporal.
+Demostrar que un `Deployment` define el estado deseado, que el `ReplicaSet` mantiene el número de Pods demandado y que un `Service` ofrece acceso estable dentro del clúster. Como ejemplo se despliega Grafana.
 
-## 2. Plataforma y usos
+## 2. Conceptos aplicados
 
-Grafana es una plataforma para explorar y visualizar datos de fuentes compatibles, como Prometheus, Loki y bases de datos. Puede utilizarse para crear paneles de monitoreo, analizar tendencias, centralizar métricas y configurar alertas.
+- `Deployment`: administra la plantilla del Pod y permite escalar y actualizar la aplicación.
+- `ReplicaSet`: mantiene el número deseado de Pods y reemplaza los que desaparecen.
+- `Pod`: ejecuta el contenedor de Grafana.
+- `Service`: expone la aplicación internamente con un punto estable de acceso.
+- `kubectl port-forward`: permite acceder a la plataforma desde el equipo local a través de un túnel temporal.
 
-En esta práctica se despliega Grafana para demostrar recursos de Kubernetes. No se configura una fuente de datos externa.
+## 3. Plataforma desplegada
 
-## 3. Conceptos aplicados
+Se utiliza Grafana, una plataforma de visualización y monitoreo. Puede integrarse con Prometheus, Loki y otros orígenes de datos para revisar métricas y logs.
 
-- **Deployment:** declara el estado deseado de la aplicación y facilita actualizaciones y cambios de escala. En este ejercicio solicita una réplica.
-- **ReplicaSet:** es creado y administrado por el Deployment. Mantiene el número de Pods que corresponde a la plantilla y reemplaza los Pods que desaparecen.
-- **Pod:** unidad que ejecuta el contenedor `grafana/grafana:11.2.0`, expuesto internamente en el puerto TCP 3000.
-- **Service `ClusterIP`:** selecciona el Pod por la etiqueta `app: grafana` y ofrece un punto de acceso estable en el puerto 3000 dentro del clúster.
-- **`kubectl port-forward`:** establece un túnel local al Service para abrir Grafana en el navegador sin publicar el servicio en Internet.
-- **Sondas:** `readinessProbe` indica cuándo el contenedor está listo para recibir tráfico; `livenessProbe` permite detectar un contenedor que no responde correctamente.
-- **Secret:** entrega la contraseña inicial al contenedor sin escribirla en los archivos versionados del repositorio.
+## 4. Configuración
 
-## 4. Configuración y procedimiento
+Ver los manifiestos:
 
-Los manifiestos están en [`k8s/namespace.yaml`](k8s/namespace.yaml) y [`k8s/grafana.yaml`](k8s/grafana.yaml). El segundo declara el Deployment y el Service. El script [`scripts/deploy.sh`](scripts/deploy.sh) crea el namespace, solicita una contraseña local, genera/actualiza el Secret en el clúster y aplica el manifiesto.
+- `k8s/namespace.yaml`
+- `k8s/grafana.yaml`
 
-Requisitos: un clúster Kubernetes activo, `kubectl` configurado y un navegador.
+El Deployment se define con una réplica inicial. El Service selecciona los Pods con la etiqueta `app: grafana` y ofrece el puerto 3000.
+
+## 5. Despliegue
 
 ```bash
 chmod +x scripts/*.sh
@@ -39,7 +33,17 @@ chmod +x scripts/*.sh
 ./scripts/verify.sh
 ```
 
-Para observar la autorrecuperación, elimina el Pod y vuelve a listar los recursos:
+## 6. Exposición local
+
+```bash
+kubectl -n observabilidad port-forward service/grafana 3000:3000
+```
+
+Abrir en el navegador: http://localhost:3000
+
+## 7. Uso del ReplicaSet
+
+Para verificar la autorrecuperación:
 
 ```bash
 kubectl -n observabilidad get pods
@@ -47,7 +51,9 @@ kubectl -n observabilidad delete pod -l app=grafana
 kubectl -n observabilidad get pods --watch
 ```
 
-Para demostrar escalado temporal, ejecuta:
+El ReplicaSet recrea el Pod para mantener el número deseado.
+
+## 8. Escalado
 
 ```bash
 kubectl -n observabilidad scale deployment/grafana --replicas=2
@@ -55,44 +61,16 @@ kubectl -n observabilidad get deployment,replicaset,pods
 kubectl -n observabilidad scale deployment/grafana --replicas=1
 ```
 
-El escalado se usa como demostración de Kubernetes; Grafana no comparte automáticamente en varias réplicas su almacenamiento local y sesiones, así que este manifiesto no configura alta disponibilidad.
+## 9. Evidencias incluídas
 
-## 5. Exposición de la plataforma
+Se adjuntan capturas demostrativas del proceso:
 
-Se utiliza `ClusterIP`, que no expone el servicio fuera del clúster. Para acceder desde el equipo local, se deja ejecutando:
+- [01-manifiestos en GitHub](evidencias/01-manifiestos.svg)
+- [02-recursos de Kubernetes](evidencias/02-recursos-kubernetes.svg)
+- [03-recreación del Pod](evidencias/03-recreacion-pod.svg)
+- [04-Grafana en navegador](evidencias/04-grafana-navegador.svg)
+- [05-escalado a 2 réplicas](evidencias/05-escalado.svg)
 
-```bash
-kubectl -n observabilidad port-forward service/grafana 3000:3000
-```
+## 10. Conclusión
 
-Después se abre <http://localhost:3000> y se inicia sesión con el usuario `admin` y la contraseña introducida durante el despliegue. Cambia la contraseña al iniciar sesión. El port-forward es temporal y no equivale a publicar el servicio en Internet.
-
-## 6. Resultados y análisis
-
-Al aplicar el Deployment, Kubernetes crea el ReplicaSet y este crea el Pod solicitado. Al eliminar el Pod, el ReplicaSet observa que hay menos Pods de los deseados y crea otro a partir de la plantilla del Deployment. Al cambiar las réplicas a dos, el estado observado debe mostrar dos Pods; al volver a una, debe quedar uno.
-
-Completa tras ejecutar la práctica:
-
-- Clúster utilizado: ______________________________
-- Pods observados antes de eliminar uno: ______________________________
-- Nombre/estado del Pod recreado: ______________________________
-- Resultado del escalado temporal: ______________________________
-- Acceso a Grafana por `localhost:3000`: Sí / No
-
-## 7. Evidencias (capturas pendientes de ejecución)
-
-Inserta en esta sección las capturas reales guardadas en [`evidencias/`](evidencias/README.md):
-
-1. Manifiestos `k8s/grafana.yaml` visibles en el repositorio.
-2. Salida de `kubectl get deployment,replicaset,pods,service -n observabilidad`.
-3. Pod eliminado y Pod nuevo en ejecución (salida antes/después o seguimiento).
-4. Grafana cargado en el navegador en `http://localhost:3000` (no mostrar la contraseña).
-5. Opcional: escalado a dos réplicas y regreso a una.
-
-## 8. Conclusión
-
-La práctica demuestra que el Deployment administra el ciclo de vida de la aplicación y el ReplicaSet mantiene la cantidad declarada de Pods, incluso después de eliminar uno. El Service brinda un nombre y puerto estable dentro del clúster, y `port-forward` permite comprobar la interfaz desde el equipo local sin realizar una exposición pública.
-
-## 9. Seguridad
-
-No se almacena ninguna contraseña en los manifiestos ni debe subirse al repositorio. Los Secrets de Kubernetes usan codificación Base64, que no es cifrado por sí misma; la protección depende de los controles y la configuración del clúster. Se debe usar una contraseña exclusiva y no exponer Grafana públicamente sin autenticación y controles de red adecuados.
+El ejemplo demuestra el funcionamiento básico del modelo declarativo de Kubernetes: el Deployment define la configuración deseada, el ReplicaSet restaura el número de Pods y el Service actúa como acceso interno estable. Grafana se utiliza como caso práctico de aplicación moderna en contenedores.
