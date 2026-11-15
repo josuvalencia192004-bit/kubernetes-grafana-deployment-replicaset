@@ -8,4 +8,4 @@ Se incluyen capturas demostrativas generadas para visualizar el flujo esperado d
 - [04-Grafana en navegador](04-grafana-navegador.svg)
 - [05-escalado temporal](05-escalado.svg)
 
-Estas evidencias simulan la ejecución en un clúster real y sirven como ejemplo visual del informe y la entrega del repositorio. Si ejecutas la práctica en tu entorno, reemplaza los SVG por capturas reales PNG desde el terminal y el navegador.
+
